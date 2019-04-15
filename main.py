@@ -17,7 +17,7 @@ form = """
       <form action="/register" id="form" form method="POST">
       <h1>Signup</h1>
         <label for="username">Username</label>
-        <input name="username" type="text" value={usererror}> 
+        <input name="username" type="text" value={usererror}>
         <p></p>
         <label for="password1">Password</label>
         <input name="password1" type="text" value={pass1error}>
