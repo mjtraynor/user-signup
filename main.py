@@ -18,19 +18,19 @@ form = """
       <form id="form" action="/register" method="POST">
       <h1>Signup</h1>
         <label for="username">Username</label>
-        <input id="username" name="username" type="text" value={0} />
+        <input id="username" name="username" type="text" value={0}>
         <span class="error" name="usererror"> {1}</span>
         <p></p>
         <label for="password1">Password</label>
-        <input id="password1" name="password1" type="password" {2} />
+        <input id="password1" name="password1" type="password" {2}>
         <span class="error" name="pass1error"> {3}</span>
         <p></p>
         <label for="password2">Verify Password</label>
-        <input id="password2" name="password2" type="password" {4} />
+        <input id="password2" name="password2" type="password" {4}>
         <span class="error" name="pass2error"> {5}</span>
         <p></p>
         <label for="email">Email (Optional)</label>
-        <input id="email" name="email" type="text" value={6} />
+        <input id="email" name="email" type="text" value={6}>
         <span class="error" name="emailerror"> {7}</span>
         <p></p>
         <input type="submit" />
@@ -50,7 +50,7 @@ def register():
     pass2 = request.form['password2']
     email = request.form['email']
 
-    userError =""
+    userError = ""
     pass1Error = ""
     pass2Error = ""
     emailError = ""
