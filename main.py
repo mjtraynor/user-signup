@@ -1,54 +1,25 @@
 from flask import Flask, request, redirect
 import cgi
+import os
+import jinja2
+
+templates_dir = os.path.join(os.path.dirname(__file__), 'templates')
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(templates_dir))
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-form = """
-
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <style>
-            .error {{color: red;}}
-        </style>
-    </head>
-    <body>
-      <form id="form" action="/register" method="POST">
-      <h1>Signup</h1>
-        <label for="username">Username</label>
-        <input id="username" name="username" type="text" value={0}>
-        <span class="error" name="usererror"> {1}</span>
-        <p></p>
-        <label for="password1">Password</label>
-        <input id="password1" name="password1" type="password" {2}>
-        <span class="error" name="pass1error"> {3}</span>
-        <p></p>
-        <label for="password2">Verify Password</label>
-        <input id="password2" name="password2" type="password" {4}>
-        <span class="error" name="pass2error"> {5}</span>
-        <p></p>
-        <label for="email">Email (Optional)</label>
-        <input id="email" name="email" type="text" value={6}>
-        <span class="error" name="emailerror"> {7}</span>
-        <p></p>
-        <input type="submit" />
-      </form>
-    </body>
-</html>
-
-"""
 @app.route("/")
 def display_form():
-    return form.format("", "", "", "", "", "", "", "")
+    template = jinja_env.get_template("form.html")
+    return template.render()
 
 @app.route("/register", methods=['POST'])
 def register():
-    user = request.form['username']
-    pass1 = request.form['password1']
-    pass2 = request.form['password2']
-    email = request.form['email']
+    user = cgi.escape(request.form['username'])
+    pass1 = cgi.escape(request.form['password1'])
+    pass2 = cgi.escape(request.form['password2'])
+    email = cgi.escape(request.form['email'])
 
     userError = ""
     pass1Error = ""
@@ -98,16 +69,19 @@ def register():
             email = ""
 
     if userError or pass1Error or pass2Error or emailError:
-        content = form.format(user, userError, pass1, pass1Error,
-        pass2, pass2Error, email, emailError)
-        return content
+        content = jinja_env.get_template("form.html")
+
+        return content.render(username=user, usererror=userError, assword1=pass1, 
+        pass1error=pass1Error, password2=pass2, pass2error=pass2Error, email=email, emailerror=emailError)
 
     return redirect("/thank_you?user={0}".format(user))
 
 @app.route("/thank_you")
 def thank_you():
     user = request.args.get("user")
-    return "Thank you for registering, {0}.".format(user)
+    template = jinja_env.get_template("thanks.html")
+
+    return template.render(user=user)
 
 #@app.route("/", methods=['POST'])
 #def register_page():

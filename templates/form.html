@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+    <body>
+      <form id="form" action="/register" method="POST">
+      <h1>Signup</h1>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" value={{username}}>
+        <span class="error" name="usererror"> {{usererror}}</span>
+        <p></p>
+        <label for="password1">Password</label>
+        <input id="password1" name="password1" type="password" {{password1}}>
+        <span class="error" name="pass1error"> {{pass1error}}</span>
+        <p></p>
+        <label for="password2">Verify Password</label>
+        <input id="password2" name="password2" type="password" {{password2}}>
+        <span class="error" name="pass2error"> {{pass2error}}</span>
+        <p></p>
+        <label for="email">Email (Optional)</label>
+        <input id="email" name="email" type="text" value={{email}}>
+        <span class="error" name="emailerror"> {{emailerror}}</span>
+        <p></p>
+        <input type="submit" />
+      </form>
+    </body>
+</html>
